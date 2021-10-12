@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     flexDirection: 'row',
     padding: 15,
-    marginVertical: 10
+    marginVertical: 15
   },
   icon: {
     marginRight: 10
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     fontSize: 18,
-    color: Colors.black
+    color: Colors.black,
   },
   rightIconStyles: {
     alignSelf: 'center',

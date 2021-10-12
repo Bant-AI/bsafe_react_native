@@ -2,11 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Colors from '../utils/colors';
+import {
+  useFonts,
+  FiraSans_500Medium,
+} from '@expo-google-fonts/fira-sans';
 
 export default function AppButton({ title, onPress, color = 'primary' }) {
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: Colors[color] }]}
+      style={[styles.button, { backgroundColor: "#1296D4" }]}
       onPress={onPress}
     >
       <Text style={styles.buttonText}>{title}</Text>
@@ -16,7 +20,7 @@ export default function AppButton({ title, onPress, color = 'primary' }) {
 
 const styles = StyleSheet.create({
   button: {
-    marginVertical: 10,
+    marginVertical: 15,
     borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
@@ -24,9 +28,9 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   buttonText: {
+    fontFamily: 'FiraSans_500Medium',
     color: Colors.white,
     fontSize: 18,
     fontWeight: '600',
-    textTransform: 'uppercase'
   }
 });

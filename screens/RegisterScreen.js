@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -71,6 +71,7 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <SafeView style={styles.container}>
+      <Text style={styles.head}>Signup to Bant.AI</Text>
       <Form
         initialValues={{
           name: '',
@@ -134,11 +135,19 @@ export default function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    backgroundColor: Colors.mediumGrey
+    backgroundColor: "white"
   },
   backButton: {
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10
+  },
+  head: {
+    fontFamily: 'FiraSans_500Medium',
+    fontSize: 31,
+    fontWeight: "700",
+    alignSelf: "center",
+    color: "#1296D4",
+    padding: 20
   }
 });

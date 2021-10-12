@@ -1,23 +1,34 @@
 {
   "expo": {
-    "name": "Expo Firebase Starter",
+    "name": "BSafe",
     "slug": "expo-firebase",
     "privacy": "public",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/flame.png",
+    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
-      "backgroundColor": "#F57C00"
+      "backgroundColor": "#1296D4"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.bantai.bsafe",
+      "supportsTablet": true,
+      "config": {
+        "googleSignIn": {
+          "reveresedClientId": "236293826086-5sfasckagho92q4m60b3cere4vif8ct4.apps.googleusercontent.com"
+        }
+      },
+      "googleServicesFile": "./GoogleService-Info.plist"
+    },
+    "android": {
+      "package": "com.bantai.bsafe",
+      "googleServicesFile": "./google-services.json"
     }
   }
 }

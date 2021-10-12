@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "236293826086",
+    "project_id": "bant-ai",
+    "storage_bucket": "bant-ai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236293826086:android:6024bb08ca5a7c9a56a8e7",
+        "android_client_info": {
+          "package_name": "com.bantai.bsafe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236293826086-r855eadcs2mtc7fhcd7f3u67kg5nv9pb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236293826086-r855eadcs2mtc7fhcd7f3u67kg5nv9pb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "236293826086-5sfasckagho92q4m60b3cere4vif8ct4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bantai.bsafe"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
