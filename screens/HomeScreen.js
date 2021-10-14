@@ -7,7 +7,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   useFonts,
   FiraSans_500Medium,
-} from '@expo-google-fsimuonts/fira-sans';
+} from '@expo-google-fonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 
 export default function HomeScreen({ navigation }) {
