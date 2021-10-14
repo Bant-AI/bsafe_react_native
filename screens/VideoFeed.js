@@ -1,9 +1,8 @@
+import { View } from 'native-base'
 import React from 'react'
 
 export default function VideoFeed() {
     return (
-        <SafeView>
-
-        </SafeView>
+        <View></View>
     )
 }
