@@ -2,15 +2,16 @@ import React from 'react';
 import { View, StyleSheet, Button, Image, Text } from 'react-native';
 
 import useStatusBar from '../hooks/useStatusBar';
-import { logout } from '../components/Firebase/firebase';
+import { user, logout } from '../components/Firebase/firebase';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   useFonts,
   FiraSans_500Medium,
-} from '@expo-google-fonts/fira-sans';
+} from '@expo-google-fsimuonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
+
   useStatusBar('dark-content');
   async function handleSignOut() {
     try {
@@ -22,32 +23,40 @@ export default function HomeScreen() {
   let [fontsLoaded] = useFonts({
     FiraSans_500Medium,
   });
+  if (user) {
+    const currentUserEmail = user.email
+  } else {
+    // No user is signed in.
+  }
   if (!fontsLoaded) {
     return <AppLoading />;
   } else {
     return (
       <>
-      <Text style={styles.head}>Welcome back!</Text>
+      <View>
+        <Text style={styles.head}>Welcome back!</Text>
+      </View>
+
       <View style={styles.container}>
       
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('ReportIncident')}>
       <Image source={require('../assets/reportIncident.png')} />
       <Text style={{alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium'}}>Report Incident</Text>
       </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('IAmSafe')}>
         <Image source={require('../assets/iamsafe.png')} />
       <Text style={{alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium'}}>I am Safe</Text>
       </TouchableOpacity>
 
       </View>
       <View style={styles.container}>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('AreaMap')}>
       <Image source={require('../assets/areamap.png')} />
       <Text style={{alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium'}}>Area Map</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('VideoFeed')}>
       <Image source={require('../assets/videofeed.png')} />
       <Text style={{alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium'}}>Video Feed</Text>
       </TouchableOpacity>
@@ -81,3 +90,5 @@ const styles = StyleSheet.create({
     marginVertical: 20
   },
 });
+
+
