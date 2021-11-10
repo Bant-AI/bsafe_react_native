@@ -6,7 +6,6 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "cover",
@@ -21,7 +20,6 @@
       "supportsTablet": true,
       "config": {
         "googleSignIn": {
-          "reveresedClientId": "236293826086-5sfasckagho92q4m60b3cere4vif8ct4.apps.googleusercontent.com"
         }
       },
       "googleServicesFile": "./GoogleService-Info.plist"
