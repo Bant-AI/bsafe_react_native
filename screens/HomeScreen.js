@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }) {
 
   if (user) {
     var currentEmail = user.email
+    console.log(currentEmail)
   }
 
   const userRef = firebase.firestore().collection('users')
@@ -54,7 +55,7 @@ export default function HomeScreen({ navigation }) {
     return (
       <>
         <View>
-          <Text style={styles.head}>{name} </Text>
+          <Text style={styles.head}>{name}</Text>
         </View>
 
         <View style={styles.container}>
