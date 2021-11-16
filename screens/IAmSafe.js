@@ -84,8 +84,11 @@ export default function IAmSafe( {navigation}) {
     return (
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <View></View>
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         <>
@@ -136,6 +139,9 @@ export default function IAmSafe( {navigation}) {
 
         </>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
