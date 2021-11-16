@@ -41,7 +41,7 @@ export default function AppStack() {
             fontFamily: "FiraSans_500Medium"
           },
         }} />
-      <Stack.Screen name="IamSafe" component={IAmSafe} 
+      <Stack.Screen name="IAmSafe" component={IAmSafe} 
         options={{
           title: 'I am Safe',
           headerStyle: {

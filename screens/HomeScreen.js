@@ -10,6 +10,8 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 
+
+
 export default function HomeScreen({ navigation }) {
 
   useStatusBar('dark-content');
