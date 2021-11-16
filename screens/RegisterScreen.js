@@ -61,12 +61,29 @@ export default function RegisterScreen({ navigation }) {
   }
 
   async function handleOnSignUp(values, actions) {
-    const { email, password } = values;
+    const { name, email, password } = values;
     try {
       await registerWithEmail(email, password);
     } catch (error) {
       setRegisterError(error.message);
     }
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "text/plain");
+
+    var raw = "{\n    \"fields\": {\n        \"status\": {\n            \"stringValue\": \"Safe\"\n        },\n        \"radius\": {\n            \"integerValue\": \"0\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": 0,\n                \"longitude\": 0\n            }\n        },\n        \"uid\": {\n            \"stringValue\": \"a\"\n        }\n        \"email\": {\n            \"stringValue\": \""+email+"\"\n        },\n        \"fullName\": {\n            \"stringValue\": \""+name+"\"\n\n        },\n    },\n}";
+
+    var requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    };
+
+    fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/users?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4", requestOptions)
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+
   }
 
   return (
@@ -124,7 +141,7 @@ export default function RegisterScreen({ navigation }) {
       <IconButton
         style={styles.backButton}
         iconName="keyboard-backspace"
-        color={Colors.white}
+        color={Colors.primary}
         size={30}
         onPress={() => navigation.goBack()}
       />

@@ -72,7 +72,7 @@ export default function WelcomeScreen({ navigation }) {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: '#E21F13' }]}
           >
-            <Image source={require('../assets/camera.png')} style={{ flex: 1, height: 37, width: 37}}/>
+            <Image source={require('../assets/camera.png')} style={{ height: 47, width: 47}}/>
           </TouchableOpacity>
          
         </View>

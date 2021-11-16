@@ -9,6 +9,9 @@
   "dependencies": {
     "@expo-google-fonts/fira-sans": "^0.2.0",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-firebase/app": "^13.0.1",
+    "@react-native-firebase/firestore": "^13.0.1",
+    "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/native": "5.5.1",
     "@react-navigation/stack": "5.5.1",
     "agora-rn-uikit": "^3.3.0",
@@ -25,7 +28,7 @@
     "firebase": "8.2.3",
     "formik": "2.1.4",
     "install": "^0.13.0",
-    "native-base": "^3.2.1",
+    "native-base": "^2.15.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
@@ -39,9 +42,16 @@
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-svg": "^12.1.1",
+<<<<<<< Updated upstream
     "react-native-unimodules": "0.14.10",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.3.1",
+=======
+    "react-native-unimodules": "~0.14.5",
+    "react-native-web": "~0.13.12",
+    "styled-components": "^5.3.3",
+    "styled-components-native": "^1.0.2",
+>>>>>>> Stashed changes
     "styled-system": "^5.1.5",
     "yup": "0.27.0"
   },

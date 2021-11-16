@@ -19,10 +19,12 @@
       "bundleIdentifier": "com.bantai.bsafe",
       "supportsTablet": true,
       "config": {
+<<<<<<< Updated upstream
         "googleSignIn": {
         }
+=======
+>>>>>>> Stashed changes
       },
-      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.bantai.bsafe",
