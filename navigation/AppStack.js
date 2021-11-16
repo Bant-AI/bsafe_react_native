@@ -8,6 +8,7 @@ import VideoFeed from "../screens/VideoFeed";
 import ReportIncident from "../screens/ReportIncident";
 import Injured from "../screens/Injured";
 import Critical from "../screens/Critical";
+import Subscriptions from "../screens/Subscriptions";
 
 
 const Stack = createStackNavigator();
@@ -121,6 +122,22 @@ export default function AppStack() {
           headerTitleStyle: {
             fontSize: 23,
             color: "white",
+            fontWeight: "bold",
+            fontFamily: "FiraSans_500Medium",
+          },
+        }}
+      />
+      <Stack.Screen
+        name="Subscriptions"
+        component={Subscriptions}
+        options={{
+          title: "Subscriptions",
+          headerStyle: {
+            backgroundColor: "white",
+          },
+          headerTitleStyle: {
+            fontSize: 23,
+            color: "#1296D4",
             fontWeight: "bold",
             fontFamily: "FiraSans_500Medium",
           },

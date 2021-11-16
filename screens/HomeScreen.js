@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Image, Text } from 'react-native';
 
 import useStatusBar from '../hooks/useStatusBar';
@@ -10,33 +10,32 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 import "firebase/firestore";
+import firebase from 'firebase';
 
-let userData = "";
-async function getData(url) {
-  let response = await fetch(url);
-  let data = await response.text()
-  return data;
-}
-async function main() {
-  getData("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/users?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4")
-    .then(function (data) {
-      console.log(data)
-      var parsed = JSON.parse(data)
-      parsed.filter(function(item){
-        if (user) {
-          email = user.email
-          console.log(item.fields.email.stringValue == email) 
-        }
-                
-    });
-
-    }
-    );
-}
-main();
 
 
 export default function HomeScreen({ navigation }) {
+
+  const [name, setName] = useState("");
+
+  if (user) {
+    var currentEmail = user.email
+  }
+
+  const userRef = firebase.firestore().collection('users')
+  useEffect(() => {
+    userRef
+        .where("email", "==", currentEmail)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(documentSnapshot => {
+            var userName = documentSnapshot.data().name
+            setName(userName)
+            console.log('Name: ', name);
+          });
+        });
+  }
+  , [])
 
   useStatusBar('dark-content');
   async function handleSignOut() {
@@ -55,7 +54,7 @@ export default function HomeScreen({ navigation }) {
     return (
       <>
         <View>
-          <Text style={styles.head}>Welcome back!</Text>
+          <Text style={styles.head}>{name} </Text>
         </View>
 
         <View style={styles.container}>
@@ -82,6 +81,11 @@ export default function HomeScreen({ navigation }) {
             <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Video Feed</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity onPress={() => navigation.navigate('Subscriptions')}>
+            <Image source={require('../assets/videofeed.png')} />
+            <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Subscriptions</Text>
+          </TouchableOpacity>
+
 
         </View>
         <View style={styles.signout}>
@@ -105,10 +109,11 @@ const styles = StyleSheet.create({
     fontFamily: 'FiraSans_500Medium',
     fontSize: 31,
     fontWeight: "700",
-    alignSelf: "center",
+    alignSelf: "flex-start",
     color: "#1296D4",
     padding: 20,
-    marginVertical: 20
+    marginVertical: 20, 
+    marginHorizontal: 30
   },
 });
 
