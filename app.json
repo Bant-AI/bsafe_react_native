@@ -19,17 +19,6 @@
       "bundleIdentifier": "com.bantai.bsafe",
       "supportsTablet": true,
       "config": {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        "googleSignIn": {
-        }
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
       },
     },
     "android": {

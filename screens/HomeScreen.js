@@ -10,26 +10,6 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 import "firebase/firestore";
-import * as firebase from "firebase";
-
-var currentUserEmail;
-if (user) {
-  const currentUserEmail = user.email;
-}
-
-const username = firebase.firestore()
-.collection('users')
-.where('email', '==', currentUserEmail)
-.get()
-.then(documentSnapshot => {
-  if (documentSnapshot.exists) {
-    console.log('User data: ', documentSnapshot.data());
-  }
-});
-
-
-
-
 
 
 export default function HomeScreen({ navigation }) {
