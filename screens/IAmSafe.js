@@ -83,8 +83,11 @@ fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/
 export default function IAmSafe( {navigation}) {
     return (
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         <View></View>
 =======
+=======
+>>>>>>> Stashed changes
         <>
         <View style={{alignItems: 'center', paddingTop: 30, paddingBottom: 30}}>
             <Image style={{width: 150, height:150}} source={require('../assets/user_icon.png')} />
@@ -132,6 +135,9 @@ export default function IAmSafe( {navigation}) {
         </View>
 
         </>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     )
 }
