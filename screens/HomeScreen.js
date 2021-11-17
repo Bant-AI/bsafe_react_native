@@ -11,32 +11,73 @@ import {
 import AppLoading from 'expo-app-loading';
 import "firebase/firestore";
 import firebase from 'firebase';
-
+import * as Location from 'expo-location';
 
 
 export default function HomeScreen({ navigation }) {
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      var json = JSON.stringify(location);
+      var parsed = JSON.parse(json)
+      var latitude = parsed.coords.latitude
+      var longitude = parsed.coords.longitude
+      setLatitude(latitude)
+      setLongitude(longitude)
+    })();
+  }, []);
+  
+  console.log(latitude);
 
   const [name, setName] = useState("");
 
   if (user) {
     var currentEmail = user.email
-    console.log(currentEmail)
+    var currentUid = user.uid
+
   }
 
   const userRef = firebase.firestore().collection('users')
   useEffect(() => {
     userRef
-        .where("email", "==", currentEmail)
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(documentSnapshot => {
-            var userName = documentSnapshot.data().name
-            setName(userName)
-            console.log('Name: ', name);
-          });
+      .where("email", "==", currentEmail)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          var userName = documentSnapshot.data().name
+          var documentId = documentSnapshot.id
+          setName(userName)
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "text/plain");
+
+          var raw = "{\n    \"fields\": {\n        \"uid\": {\n            \"stringValue\": \""+currentUid+"\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        }\n    }\n}";
+
+          var requestOptions = {
+            method: 'PATCH',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+          };
+
+          fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/users/"+documentId+"?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4?currentDocument.exists=true&updateMask.fieldPaths=uid&updateMask.fieldPaths=location", requestOptions)
+            .then(response => response.text())
+          //   .then(result => console.log(result))
+            .catch(error => console.log('error', error));
+          // console.log('Name: ', name);
         });
+      });
   }
-  , [])
+    , [])
 
   useStatusBar('dark-content');
   async function handleSignOut() {
@@ -113,7 +154,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     color: "#1296D4",
     padding: 20,
-    marginVertical: 20, 
+    marginVertical: 20,
     marginHorizontal: 30
   },
 });

@@ -20,4 +20,6 @@ target 'BSafe' do
   #     flipper_post_install(installer)
   #   end
   # end
+  pod 'ReactNativeGetLocation', :path => '../node_modules/react-native-get-location'
+
 end
