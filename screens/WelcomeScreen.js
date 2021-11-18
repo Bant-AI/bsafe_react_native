@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import AppButton from '../components/AppButton';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Platform } from 'react-native';
 import Colors from '../utils/colors';
 import * as Yup from 'yup';
 import useStatusBar from '../hooks/useStatusBar';
 import SafeView from '../components/SafeView';
 import Form from '../components/Forms/Form';
 import FormField from '../components/Forms/FormField';
+import { auth, user } from '../components/Firebase/firebase';
 import FormButton from '../components/Forms/FormButton';
 import IconButton from '../components/IconButton';
 import { loginWithEmail } from '../components/Firebase/firebase';
@@ -18,6 +18,9 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import { SocialIcon } from 'react-native-elements'
 import * as Google from 'expo-google-app-auth';
+import firebase from 'firebase';
+export const isAndroid = () => Platform.OS === 'android';
+import * as Location from 'expo-location';
 
 
 
@@ -34,25 +37,98 @@ const validationSchema = Yup.object().shape({
 });
 
 
+export default function WelcomeScreen() {
+  const [id, setId] = useState("");
+  const [latitude, setLatitude] = useState("");
+  const [longitude, setLongitude] = useState("");
 
-export default function WelcomeScreen({ navigation }) {
-  const handleGoogleSignIn = ({navigation}) => {
-    const config = {
-      iosClientId: `808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr.apps.googleusercontent.com`,
-      scopes: ['profile', 'email']
-    };
-    Google.logInAsync(config).then((result) => {
-      console.log(result)
-      if (type == "success") {
-        console.log("success")
-        setTimeout(() => navigation.navigate('HomeScreen'))
-  
+  if (user) {
+    var currentId = user.uid;
+  }
+
+  useEffect(() => {
+    setId(currentId);
+  }, [currentId]);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
       }
-    }).catch(error => {
-      console.log(error)
-    })
-  };
+
+      let location = await Location.getCurrentPositionAsync({});
+      var json = JSON.stringify(location);
+      var parsed = JSON.parse(json)
+      var latitude = parsed.coords.latitude
+      var longitude = parsed.coords.longitude
+      setLatitude(latitude)
+      setLongitude(longitude)
+    })();
+  }, []);
   
+
+
+  const Glogin = async () => {
+    try {
+      //await GoogleSignIn.askForPlayServicesAsync();
+      const result = await Google.logInAsync({ //return an object with result token and user
+        iosClientId: '808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr.apps.googleusercontent.com', //From app.json//From app.json
+      });
+      if (result.type === 'success') {
+        const credential = firebase.auth.GoogleAuthProvider.credential( //Set the tokens to Firebase
+          result.idToken,
+          result.accessToken
+        );
+        auth
+          .signInWithCredential(credential) //Login to Firebase
+          .catch((error) => {
+            console.log(error);
+          });
+        var string = JSON.stringify(result);
+        var parse = JSON.parse(string).user;
+        var email = parse.email;
+        var name = parse.name;
+        var photoUrl = parse.photoUrl;
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "text/plain");
+
+        var raw = "{\n    \"fields\": {\n        \"status\": {\n            \"stringValue\": \"Safe\"\n        },\n      \"company\": {\n            \"stringValue\": \"Company\"\n        },\n        \"city\": {\n            \"stringValue\": \"City\"\n        },\n     \"manager\": {\n            \"stringValue\": \"Manager\"\n        },\n      \"building\": {\n            \"stringValue\": \"Building\"\n        },\n           \"radius\": {\n            \"integerValue\": \"0\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        },\n        \"uid\": {\n            \"stringValue\": \"0\"\n        },\n        \"email\": {\n            \"stringValue\": \"" + email + "\"\n        },\n        \"name\": {\n            \"stringValue\": \"" + name + "\"\n        },\n    \"photoUrl\": {\n            \"stringValue\": \""+photoUrl+"\"\n        }\n   }\n}";
+
+        var requestOptions = {
+          method: 'POST',
+          headers: myHeaders,
+          body: raw,
+          redirect: 'follow'
+        };
+
+        fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/users?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4", requestOptions)
+          .then(response => response.text())
+          // .then(result => console.log(result))
+          .catch(error => console.log('error', error));
+      } else {
+        //CANCEL
+      }
+    } catch ({ message }) {
+      alert(message);
+    }
+  };
+
+  // const handleGoogleSignIn = () => {
+  //   const config = {
+  //     iosClientId: '808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr.apps.googleusercontent.com',
+  //     scopes: ['profile', 'email']
+  //   };
+  //   Google.logInAsync(config).then((result) => {
+  //     var data = JSON.parse(JSON.stringify(result));
+  //     var idToken = data.id
+  //     console.log(data);
+  //   }).catch(error => {
+  //     console.log(error)
+  //   })
+  // };
+
   let [fontsLoaded] = useFonts({
     FiraSans_500Medium,
   });
@@ -129,12 +205,12 @@ export default function WelcomeScreen({ navigation }) {
             <Text style={styles.subhead}>
               Or you can log in with
             </Text>
-            <TouchableOpacity onPress={handleGoogleSignIn}>            
+            <TouchableOpacity onPress={Glogin}>
               <SocialIcon
-              title='Sign in with Google'
-              button
-              type='google'
-            />
+                title='Sign in with Google'
+                button
+                type='google'
+              />
             </TouchableOpacity>
 
             <SocialIcon

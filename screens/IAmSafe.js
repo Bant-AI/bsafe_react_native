@@ -9,6 +9,22 @@ import * as Location from 'expo-location';
 export default function IAmSafe({ navigation }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+
+  if (user) {
+    var currentEmail = user.email
+  }
+
+  const userReference = firebase.firestore().collection('users')
+    userReference
+      .where("email", "==", currentEmail)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          var photoUrlData = documentSnapshot.data().photoUrl
+            setPhotoUrl(photoUrlData)
+        });
+      })
 
   useEffect(() => {
     (async () => {
@@ -28,15 +44,10 @@ export default function IAmSafe({ navigation }) {
     })();
   }, []);
   
-  console.log(latitude);
 
   const [name, setName] = useState("");
 
-  if (user) {
-    var currentEmail = user.email
-    var currentUid = user.uid
 
-  }
 
   const userRef = firebase.firestore().collection('users')
   useEffect(() => {
@@ -71,9 +82,6 @@ export default function IAmSafe({ navigation }) {
   }
     , [])
 
-  if (user) {
-    var currentEmail = user.email
-  }
 
   const [id, setId] = useState("");
 
@@ -86,7 +94,6 @@ export default function IAmSafe({ navigation }) {
         querySnapshot.forEach(documentSnapshot => {
           var docId = documentSnapshot.id
           setId(docId)
-          console.log('Name: ', docId);
         });
       })
     var myHeaders = new Headers();
@@ -181,7 +188,7 @@ export default function IAmSafe({ navigation }) {
   return (
     <>
       <View style={{ alignItems: 'center', paddingTop: 30, paddingBottom: 30 }}>
-        <Image style={{ width: 150, height: 150 }} source={require('../assets/user_icon.png')} />
+        <Image style={{ width: 150, height: 150 }} source={{uri: photoUrl}} />
         <Text style={{ alignSelf: 'center', paddingTop: 30, fontSize: 36, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>{name}</Text>
       </View>
 

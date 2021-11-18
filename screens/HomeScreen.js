@@ -17,6 +17,7 @@ import * as Location from 'expo-location';
 export default function HomeScreen({ navigation }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
+  const [uid, setUid] = useState("");
 
   const auth = firebase.auth();
   const user = auth.currentUser;
@@ -39,7 +40,6 @@ export default function HomeScreen({ navigation }) {
     })();
   }, []);
   
-  console.log(latitude);
 
   const [name, setName] = useState("");
 
@@ -48,6 +48,9 @@ export default function HomeScreen({ navigation }) {
     var currentUid = user.uid
 
   }
+  useEffect(() => {
+    setUid(currentUid);
+  }, [currentUid]);
 
   const userRef = firebase.firestore().collection('users')
   useEffect(() => {
@@ -63,7 +66,7 @@ export default function HomeScreen({ navigation }) {
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "text/plain");
 
-          var raw = "{\n    \"fields\": {\n        \"uid\": {\n            \"stringValue\": \""+currentUid+"\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        }\n    }\n}";
+          var raw = "{\n    \"fields\": {\n        \"uid\": {\n            \"stringValue\": \""+uid+"\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        }\n    }\n}";
 
           var requestOptions = {
             method: 'PATCH',

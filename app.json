@@ -24,7 +24,11 @@
     "ios": {
       "bundleIdentifier": "com.bantai.bsafe",
       "supportsTablet": true,
-      "config": {}
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr"
+        }
+      }
     },
     "android": {
       "package": "com.bantai.bsafe",

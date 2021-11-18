@@ -82,9 +82,15 @@ export default function Subscriptions({navigation}) {
           defaultValue={code}
           style={{ height: 40, marginHorizontal: 60, padding: 10, shadowOffset: { width: 0, height: 1 }, shadowColor: 'black', shadowOpacity: 0.5, borderRadius: 10, backgroundColor: 'white' }}
         />
+
         <TouchableOpacity onPress={subscribe}>
           <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', fontSize: 19, padding: 15 }}>Subscribe</Text>
         </TouchableOpacity>
+        <TouchableOpacity>
+          <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', fontSize: 19, padding: 15 }}>Refresh</Text>
+        </TouchableOpacity>
+
+
 
       </View>
     </>
