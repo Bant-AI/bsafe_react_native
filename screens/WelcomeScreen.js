@@ -16,8 +16,10 @@ import {
   useFonts,
   FiraSans_500Medium,
 } from '@expo-google-fonts/fira-sans';
-import * as GoogleSignIn from 'expo-google-sign-in';
 import { SocialIcon } from 'react-native-elements'
+import * as Google from 'expo-google-app-auth';
+
+
 
 
 const validationSchema = Yup.object().shape({
@@ -34,6 +36,23 @@ const validationSchema = Yup.object().shape({
 
 
 export default function WelcomeScreen({ navigation }) {
+  const handleGoogleSignIn = ({navigation}) => {
+    const config = {
+      iosClientId: `808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr.apps.googleusercontent.com`,
+      scopes: ['profile', 'email']
+    };
+    Google.logInAsync(config).then((result) => {
+      console.log(result)
+      if (type == "success") {
+        console.log("success")
+        setTimeout(() => navigation.navigate('HomeScreen'))
+  
+      }
+    }).catch(error => {
+      console.log(error)
+    })
+  };
+  
   let [fontsLoaded] = useFonts({
     FiraSans_500Medium,
   });
@@ -72,82 +91,85 @@ export default function WelcomeScreen({ navigation }) {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: '#E21F13' }]}
           >
-            <Image source={require('../assets/camera.png')} style={{ height: 47, width: 47}}/>
+            <Image source={require('../assets/camera.png')} style={{ height: 47, width: 47 }} />
           </TouchableOpacity>
-         
-        </View>
-        <View style={{backgroundColor: '#FFFFFF', width: '100%', position: 'absolute'}}>
-        <SafeView style={styles.loginContainer}>
-          <Text style={styles.head}>Log in to your account</Text>
-        <Form
-          initialValues={{ email: '', password: '' }}
-          validationSchema={validationSchema}
-          onSubmit={values => handleOnLogin(values)}
-        >
-          <FormField
-            name="email"
-            leftIcon="email"
-            placeholder="Email"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            textContentType="emailAddress"
-            autoFocus={true}
-          />
-          <FormField
-            name="password"
-            leftIcon="lock"
-            placeholder="Password"
-            autoCapitalize="none"
-            autoCorrect={false}
-            secureTextEntry={passwordVisibility}
-            textContentType="password"
-            rightIcon={rightIcon}
-            handlePasswordVisibility={handlePasswordVisibility}
-          />
-          <FormButton title={'Log In'}/>
-          {<FormErrorMessage error={loginError} visible={true} />}
-        </Form>
-        <Text style={styles.subhead}>
-          Or you can log in with
-        </Text>
-        <SocialIcon
-          title='Sign in with Google'
-          button
-          type='google'
-        />
-        <SocialIcon
-          title='Sign in with Facebook'
-          button
-          type='facebook'
-        />
-        <View>
-        <Text style={styles.subhead}>
-          Don't have an account? <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text>Sign up here</Text></TouchableOpacity>
-        </Text>
-        </View>
-        <View style={styles.footerButtonContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
-            <Text style={styles.forgotPasswordButtonText}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-        <IconButton
-          style={styles.backButton}
-          iconName="keyboard-backspace"
-          color="#fff"
-          size={30}
-          onPress={() => navigation.goBack()}
-        />
 
-      </SafeView>
-        {/* <AppButton title="Login" onPress={() => navigation.navigate('Login')} />
+        </View>
+        <View style={{ backgroundColor: '#FFFFFF', width: '100%', position: 'absolute' }}>
+          <SafeView style={styles.loginContainer}>
+            <Text style={styles.head}>Log in to your account</Text>
+            <Form
+              initialValues={{ email: '', password: '' }}
+              validationSchema={validationSchema}
+              onSubmit={values => handleOnLogin(values)}
+            >
+              <FormField
+                name="email"
+                leftIcon="email"
+                placeholder="Email"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                textContentType="emailAddress"
+                autoFocus={true}
+              />
+              <FormField
+                name="password"
+                leftIcon="lock"
+                placeholder="Password"
+                autoCapitalize="none"
+                autoCorrect={false}
+                secureTextEntry={passwordVisibility}
+                textContentType="password"
+                rightIcon={rightIcon}
+                handlePasswordVisibility={handlePasswordVisibility}
+              />
+              <FormButton title={'Log In'} />
+              {<FormErrorMessage error={loginError} visible={true} />}
+            </Form>
+            <Text style={styles.subhead}>
+              Or you can log in with
+            </Text>
+            <TouchableOpacity onPress={handleGoogleSignIn}>            
+              <SocialIcon
+              title='Sign in with Google'
+              button
+              type='google'
+            />
+            </TouchableOpacity>
+
+            <SocialIcon
+              title='Sign in with Facebook'
+              button
+              type='facebook'
+            />
+            <View>
+              <Text style={styles.subhead}>
+                Don't have an account? <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text>Sign up here</Text></TouchableOpacity>
+              </Text>
+            </View>
+            <View style={styles.footerButtonContainer}>
+              <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                <Text style={styles.forgotPasswordButtonText}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
+            <IconButton
+              style={styles.backButton}
+              iconName="keyboard-backspace"
+              color="#fff"
+              size={30}
+              onPress={() => navigation.goBack()}
+            />
+
+          </SafeView>
+          {/* <AppButton title="Login" onPress={() => navigation.navigate('Login')} />
           <AppButton
             title="Register"
             color="secondary"
             onPress={() => navigation.navigate('Register')}
           /> */}
         </View>
-  
-  
+
+
       </View>
     );
   }
@@ -155,7 +177,7 @@ export default function WelcomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  subhead : {
+  subhead: {
     fontFamily: 'FiraSans_500Medium',
     fontSize: 14,
     color: "black",
@@ -217,7 +239,7 @@ const styles = StyleSheet.create({
     borderRadius: 15.13,
     shadowColor: '#00000040',
     shadowOffset: { width: 2.6399998664855957, height: 2.6399998664855957 },
-    shadowRadius: 15.13,  
+    shadowRadius: 15.13,
     alignItems: 'center'
   }
 });

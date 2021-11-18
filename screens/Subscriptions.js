@@ -4,11 +4,29 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { user } from '../components/Firebase/firebase';
 import IconButton from '../components/IconButton';
 import Colors from '../utils/colors';
+import firebase from 'firebase';
 
 
 export default function Subscriptions({navigation}) {
   const [id, setId] = useState("");
   const [code, setCode] = useState("");
+  
+
+  const userRef = firebase.firestore().collection('subscriptions')
+  useEffect(() => {
+    userRef
+      .where("sender", "==", id)
+      .where("receiver", "==", id)
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(documentSnapshot => {
+          var userName = documentSnapshot.data().name
+          var documentId = documentSnapshot.id
+          setName(userName)
+        });
+      });
+  } 
+    , [])
 
   if (user) {
     var currentId = user.uid;
@@ -45,9 +63,17 @@ export default function Subscriptions({navigation}) {
   }
 
 
+
   return (
     <>
       <View>
+      <IconButton
+        style={styles.backButton}
+        iconName="keyboard-backspace"
+        color={Colors.primary}
+        size={30}
+        onPress={() => navigation.goBack()}
+      />
         <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', marginVertical: 30, fontSize: 19, backgroundColor: 'white', padding: 15 }}>{id}</Text>
 
         <TextInput
@@ -59,13 +85,7 @@ export default function Subscriptions({navigation}) {
         <TouchableOpacity onPress={subscribe}>
           <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', fontSize: 19, padding: 15 }}>Subscribe</Text>
         </TouchableOpacity>
-        <IconButton
-        style={styles.backButton}
-        iconName="keyboard-backspace"
-        color={Colors.primary}
-        size={30}
-        onPress={() => navigation.goBack()}
-      />
+
       </View>
     </>
   )

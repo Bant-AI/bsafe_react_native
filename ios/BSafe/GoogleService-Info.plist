@@ -3,32 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>582479638550-qajrembi4lsnenoirb21as963lsmvdh8.apps.googleusercontent.com</string>
+	<string>808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.582479638550-qajrembi4lsnenoirb21as963lsmvdh8</string>
-	<key>API_KEY</key>
-	<string>AIzaSyDrSHvbPtF2fQCNXWrfzuL2Rt8yZUolIFQ</string>
-	<key>GCM_SENDER_ID</key>
-	<string>582479638550</string>
+	<string>com.googleusercontent.apps.808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.bantai.bsafe</string>
-	<key>PROJECT_ID</key>
-	<string>bant-ai-bsafe</string>
-	<key>STORAGE_BUCKET</key>
-	<string>bant-ai-bsafe.appspot.com</string>
-	<key>IS_ADS_ENABLED</key>
-	<false></false>
-	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
-	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
-	<key>IS_GCM_ENABLED</key>
-	<true></true>
-	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
-	<key>GOOGLE_APP_ID</key>
-	<string>1:582479638550:ios:e2af879a78d881de720537</string>
 </dict>
 </plist>

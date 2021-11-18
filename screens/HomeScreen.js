@@ -18,6 +18,9 @@ export default function HomeScreen({ navigation }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
 
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
