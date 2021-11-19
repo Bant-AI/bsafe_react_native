@@ -5,7 +5,6 @@ import { user } from '../components/Firebase/firebase';
 import firebase from 'firebase';
 import * as Location from 'expo-location';
 
-
 export default function IAmSafe({ navigation }) {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -231,7 +230,6 @@ export default function IAmSafe({ navigation }) {
           <Text style={{ alignSelf: 'center', fontSize: 16.68, color: 'white', fontFamily: 'FiraSans_500Medium' }}>Critical</Text>
         </TouchableOpacity>
       </View>
-
     </>
 
 
