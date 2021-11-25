@@ -22,7 +22,7 @@ export default function Subscriptions({navigation}) {
         querySnapshot.forEach(documentSnapshot => {
           var userName = documentSnapshot.data().name
           var documentId = documentSnapshot.id
-          setName(userName)
+
         });
       });
   } 
@@ -56,7 +56,7 @@ export default function Subscriptions({navigation}) {
 
       fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/subscriptions?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4", requestOptions)
         .then(response => response.text())
-        .then(result => console.log(result))
+        // .then(result => console.log(result))
         .catch(error => console.log('error', error));
       alert("Subscription code added");
     }

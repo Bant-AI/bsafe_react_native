@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Platform } from 'react-native';
+import { View, StyleSheet, Text, Image, TouchableOpacity, Platform, Alert } from 'react-native';
 import Colors from '../utils/colors';
 import * as Yup from 'yup';
 import useStatusBar from '../hooks/useStatusBar';
@@ -18,9 +18,11 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import { SocialIcon } from 'react-native-elements'
 import * as Google from 'expo-google-app-auth';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 export const isAndroid = () => Platform.OS === 'android';
 import * as Location from 'expo-location';
+import * as Facebook from 'expo-facebook';
+import { FacebookAuthProvider } from "firebase/auth";
 
 
 
@@ -67,6 +69,57 @@ export default function WelcomeScreen() {
       setLongitude(longitude)
     })();
   }, []);
+  
+
+  async function facebookLogIn() {
+    try {
+      await Facebook.initializeAsync({
+        appId: '455260959363572',
+      });
+      const {
+        type,
+        token,
+        expirationDate,
+        permissions,
+        declinedPermissions,
+      } = await Facebook.logInWithReadPermissionsAsync({
+        permissions: ['public_profile', 'email'],
+      });
+      if (type === 'success') {
+        const response = await fetch(`https://graph.facebook.com/me?&access_token=${token}`);
+          const profile = await response.json();
+          console.log('response', response);
+          console.log('profile', profile);
+          Alert.alert(
+            'Logged in!',
+            `Hi ${profile.name}!`,
+          );
+        // Get the user's name using Facebook's Graph APIs
+        // const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+        // const result = JSON.stringify(response);
+        // console.log(result);
+        const credential = firebase.auth.FacebookAuthProvider.credential( //Set the tokens to Firebase
+          token
+        );
+        auth
+          .signInWithCredential(credential) //Login to Firebase
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        // type === 'cancel'
+      }
+    } catch ({ message }) {
+      alert(`Facebook Login Error: ${message}`);
+    }
+  }
+  
+
+  const logout = () => {
+    setLoggedinStatus(false);
+    setUserData(null);
+    setImageLoadStatus(false);
+  }
   
 
 
@@ -212,12 +265,15 @@ export default function WelcomeScreen() {
                 type='google'
               />
             </TouchableOpacity>
-
+            <TouchableOpacity onPress={facebookLogIn}>
             <SocialIcon
               title='Sign in with Facebook'
               button
               type='facebook'
             />
+            </TouchableOpacity>
+
+          
             <View>
               <Text style={styles.subhead}>
                 Don't have an account? <TouchableOpacity onPress={() => navigation.navigate('Register')}><Text>Sign up here</Text></TouchableOpacity>

@@ -10,7 +10,7 @@ import {
 } from '@expo-google-fonts/fira-sans';
 import AppLoading from 'expo-app-loading';
 import "firebase/firestore";
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import * as Location from 'expo-location';
 
 

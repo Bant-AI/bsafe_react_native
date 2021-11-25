@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Text, Image } from 'react-native-elements'
 import { View, TouchableOpacity, Alert } from 'react-native'
 import { user } from '../components/Firebase/firebase';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import * as Location from 'expo-location';
 
 export default function IAmSafe({ navigation }) {
@@ -181,7 +181,7 @@ export default function IAmSafe({ navigation }) {
 
     fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/users/"+id+"?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4?currentDocument.exists=true&updateMask.fieldPaths=status&updateMask.fieldPaths=radius", requestOptions)
       .then(response => response.text())
-      .then(result => console.log(result))
+      .then(result => {})
       .catch(error => console.log('error', error));
   }
   return (
