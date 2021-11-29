@@ -6,6 +6,11 @@ import * as firebase from 'firebase';
 import * as Location from 'expo-location';
 
 export default function IAmSafe({ navigation }) {
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
@@ -62,7 +67,7 @@ export default function IAmSafe({ navigation }) {
           var myHeaders = new Headers();
           myHeaders.append("Content-Type", "text/plain");
 
-          var raw = "{\n    \"fields\": {\n        \"uid\": {\n            \"stringValue\": \""+currentUid+"\"\n        },\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        }\n    }\n}";
+          var raw = "{\n    \"fields\": {\n        \"location\": {\n            \"geoPointValue\": {\n                \"latitude\": "+latitude+",\n                \"longitude\": "+longitude+"\n            }\n        }\n    }\n}";
 
           var requestOptions = {
             method: 'PATCH',

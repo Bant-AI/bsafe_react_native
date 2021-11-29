@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, Button, Image, Text } from 'react-native';
 
 import useStatusBar from '../hooks/useStatusBar';
-import { user, logout } from '../components/Firebase/firebase';
+import { logout } from '../components/Firebase/firebase';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {
   useFonts,
@@ -15,12 +15,15 @@ import * as Location from 'expo-location';
 
 
 export default function HomeScreen({ navigation }) {
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [uid, setUid] = useState("");
 
-  const auth = firebase.auth();
-  const user = auth.currentUser;
 
   useEffect(() => {
     (async () => {
@@ -37,6 +40,7 @@ export default function HomeScreen({ navigation }) {
       var longitude = parsed.coords.longitude
       setLatitude(latitude)
       setLongitude(longitude)
+      setUid(currentUid);
     })();
   }, []);
   
@@ -48,9 +52,6 @@ export default function HomeScreen({ navigation }) {
     var currentUid = user.uid
 
   }
-  useEffect(() => {
-    setUid(currentUid);
-  }, [currentUid]);
 
   const userRef = firebase.firestore().collection('users')
   useEffect(() => {

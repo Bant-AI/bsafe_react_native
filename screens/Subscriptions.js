@@ -5,36 +5,69 @@ import { user } from '../components/Firebase/firebase';
 import IconButton from '../components/IconButton';
 import Colors from '../utils/colors';
 import firebase from 'firebase';
+import Invitation from '../components/Invitation';
+import SubscriptionItem from '../components/SubscriptionItem';
 
 
 export default function Subscriptions({navigation}) {
+  const auth = firebase.auth();
+  const user = auth.currentUser;
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
   const [id, setId] = useState("");
   const [code, setCode] = useState("");
-  
-
-  const userRef = firebase.firestore().collection('subscriptions')
-  useEffect(() => {
-    userRef
-      .where("sender", "==", id)
-      .where("receiver", "==", id)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(documentSnapshot => {
-          var userName = documentSnapshot.data().name
-          var documentId = documentSnapshot.id
-
-        });
-      });
-  } 
-    , [])
+  const [subscription, setSubscription] = useState([]);
+  const [invitation, setInvitation] = useState([]);
 
   if (user) {
     var currentId = user.uid;
   }
 
   useEffect(() => {
+    // var requestOptions = {
+    //   method: 'GET',
+    //   redirect: 'follow'
+    // };
+    
+    // fetch("https://firestore.googleapis.com/v1/projects/bant-ai/databases/(default)/documents/subscriptions?key=AIzaSyBL6jwaEBlafkAnQJrCXTNML1di26Dq_q4", requestOptions)
+    //   .then(response => response.text())
+    //   .then(result => {
+    //     var data = JSON.parse(result)
+    //     var documents = JSON.stringify(data.documents[0])
+    //     console.log(documents)
+    //   })
     setId(currentId);
   }, [currentId]);
+
+
+
+
+    const subsRef = firebase.firestore().collection('subscriptions')
+    useEffect(() => { 
+      subsRef
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(documentSnapshot => {
+            var data = documentSnapshot.data()
+            var sender = data.sender
+            var receiver = data.receiver
+            var accepted = data.accepted
+            if ((receiver == currentId || sender == currentId) && accepted == true) {
+              setSubscription([data])
+              console.log(subscription)
+            } else if (receiver == currentId && accepted == false) {
+              setInvitation([data])
+              console.log(invitation)
+            }
+          });
+        });
+    } 
+      , [id])
+
+  
+
+
 
   function subscribe(code, id) {
     if (code === id) {
@@ -86,13 +119,20 @@ export default function Subscriptions({navigation}) {
         <TouchableOpacity onPress={subscribe}>
           <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', fontSize: 19, padding: 15 }}>Subscribe</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Text style={{ alignSelf: 'center', color: '#1296D4', fontFamily: 'FiraSans_500Medium', fontSize: 19, padding: 15 }}>Refresh</Text>
-        </TouchableOpacity>
-
-
-
+        </TouchableOpacity> */}
       </View>
+      {
+        invitation.map((item) => {
+          return <Invitation sender={item.sender} receiver={item.receiver}></Invitation>
+        })
+      }
+      {
+        subscription.map((item) => {
+          return <SubscriptionItem sender={item.sender} receiver={item.receiver}></SubscriptionItem>
+        })
+      }
     </>
   )
 }

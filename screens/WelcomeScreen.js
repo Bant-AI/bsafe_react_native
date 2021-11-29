@@ -22,7 +22,12 @@ import * as firebase from 'firebase';
 export const isAndroid = () => Platform.OS === 'android';
 import * as Location from 'expo-location';
 import * as Facebook from 'expo-facebook';
-import { FacebookAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  onAuthStateChanged,
+  FacebookAuthProvider,
+  signInWithCredential,
+} from 'firebase/auth';
 
 
 
@@ -70,50 +75,24 @@ export default function WelcomeScreen() {
     })();
   }, []);
   
-
-  async function facebookLogIn() {
-    try {
-      await Facebook.initializeAsync({
-        appId: '455260959363572',
+  async function loginWithFacebook() {
+    await Facebook.initializeAsync('455260959363572');
+  
+    const { type, token } = await Facebook.logInWithReadPermissionsAsync({
+      permissions: ['public_profile'],
+    });
+  
+    if (type === 'success') {
+      // Build Firebase credential with the Facebook access token.
+      const facebookAuthProvider = new firebase.auth.FacebookAuthProvider();
+      const credential = facebookAuthProvider.credential(token);
+  
+      // Sign in with credential from the Facebook user.
+      signInWithCredential(auth, credential).catch(error => {
+        // Handle Errors here.
       });
-      const {
-        type,
-        token,
-        expirationDate,
-        permissions,
-        declinedPermissions,
-      } = await Facebook.logInWithReadPermissionsAsync({
-        permissions: ['public_profile', 'email'],
-      });
-      if (type === 'success') {
-        const response = await fetch(`https://graph.facebook.com/me?&access_token=${token}`);
-          const profile = await response.json();
-          console.log('response', response);
-          console.log('profile', profile);
-          Alert.alert(
-            'Logged in!',
-            `Hi ${profile.name}!`,
-          );
-        // Get the user's name using Facebook's Graph APIs
-        // const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
-        // const result = JSON.stringify(response);
-        // console.log(result);
-        const credential = firebase.auth.FacebookAuthProvider.credential( //Set the tokens to Firebase
-          token
-        );
-        auth
-          .signInWithCredential(credential) //Login to Firebase
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        // type === 'cancel'
-      }
-    } catch ({ message }) {
-      alert(`Facebook Login Error: ${message}`);
     }
   }
-  
 
   const logout = () => {
     setLoggedinStatus(false);
@@ -265,7 +244,7 @@ export default function WelcomeScreen() {
                 type='google'
               />
             </TouchableOpacity>
-            <TouchableOpacity onPress={facebookLogIn}>
+            <TouchableOpacity onPress={loginWithFacebook}>
             <SocialIcon
               title='Sign in with Facebook'
               button
