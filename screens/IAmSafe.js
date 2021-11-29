@@ -199,16 +199,16 @@ export default function IAmSafe({ navigation }) {
       <View style={{ alignSelf: 'center' }}>
         <View style={{ flexDirection: 'row', alignSelf: 'left' }}>
           <View style={{ marginRight: 10 }}>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Company</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Office Building</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>City</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Line Manager</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Company</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Office Building</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>City</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Line Manager</Text>
           </View>
           <View style={{ marginLeft: 10 }}>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Legitimate Company</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Legitimate Tower, Ayala Ave.</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Makati City</Text>
-            <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Miguel Alcantara</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Legitimate Company</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Legitimate Tower, Ayala Ave.</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Makati City</Text>
+            <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>Miguel Alcantara</Text>
 
           </View>
         </View>
@@ -217,7 +217,7 @@ export default function IAmSafe({ navigation }) {
         <TouchableOpacity
           onPress={() => alert('Hello, world!')}
           style={{ backgroundColor: 'white', padding: 15, borderRadius: 20, marginTop: 10, marginBottom: 10, shadowOpacity: 0.2, shadowOffset: { width: 0, height: 1 }, }}>
-          <Text style={{ alignSelf: 'left', fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>{latitude}, {longitude}</Text>
+          <Text style={{  fontSize: 16.68, color: '#1296D4', fontFamily: 'FiraSans_500Medium' }}>{latitude}, {longitude}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={safe}
