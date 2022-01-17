@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Image, Text } from 'react-native';
+import { View, StyleSheet, Button, Image, Text, ScrollView } from 'react-native';
 
 import useStatusBar from '../hooks/useStatusBar';
 import { logout } from '../components/Firebase/firebase';
@@ -101,7 +101,7 @@ export default function HomeScreen({ navigation }) {
     return <AppLoading />;
   } else {
     return (
-      <>
+      <ScrollView>
         <View>
           <Text style={styles.head}>{name}</Text>
         </View>
@@ -140,7 +140,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.signout}>
           <Button title="Sign Out" onPress={handleSignOut} />
         </View>
-      </>
+      </ScrollView>
     );
   }
 }

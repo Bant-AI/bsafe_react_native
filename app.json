@@ -21,19 +21,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "bundleIdentifier": "com.bantai.bsafe",
-      "supportsTablet": true,
-      "config": {
-        "googleSignIn": {
-          "reservedClientId": "com.googleusercontent.apps.808890948090-t5uqqi9hp5619mmnllpf3aa7j53jckbr"
-        }
-      }
-    },
-    "android": {
-      "package": "com.bantai.bsafe",
-      "googleServicesFile": "./google-services.json"
-    },
     "description": "Camera-based system powered by AI to instantaneously save precious lives and properties.",
     "githubUrl": "https://github.com/Bant-AI/bsafe_react_native"
   }

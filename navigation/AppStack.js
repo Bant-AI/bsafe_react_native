@@ -10,7 +10,6 @@ import Injured from "../screens/Injured";
 import Critical from "../screens/Critical";
 import Subscriptions from "../screens/Subscriptions";
 
-
 const Stack = createStackNavigator();
 
 export default function AppStack() {
@@ -111,7 +110,7 @@ export default function AppStack() {
           },
         }}
       />
-                  <Stack.Screen
+      <Stack.Screen
         name="Critical"
         component={Critical}
         options={{

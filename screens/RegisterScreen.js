@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, Image } from 'react-native';
 import * as Yup from 'yup';
 
 import Colors from '../utils/colors';
@@ -88,6 +88,7 @@ export default function RegisterScreen({ navigation }) {
 
   return (
     <SafeView style={styles.container}>
+      <Image source={require('../assets/logo.png')} style={{ height: 55, width: 48, margin: 10, alignSelf: 'center' }} />
       <Text style={styles.head}>Signup to Bant.AI</Text>
       <Form
         initialValues={{

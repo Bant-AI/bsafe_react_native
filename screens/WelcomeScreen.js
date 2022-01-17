@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Image, TouchableOpacity, Platform, Alert } from 'react-native';
+import { View, StyleSheet, ScrollView, Text, Image, TouchableOpacity, Platform, Alert } from 'react-native';
 import Colors from '../utils/colors';
 import * as Yup from 'yup';
 import useStatusBar from '../hooks/useStatusBar';
@@ -44,7 +44,7 @@ const validationSchema = Yup.object().shape({
 });
 
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({navigation}) {
   const [id, setId] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -193,8 +193,8 @@ export default function WelcomeScreen() {
     return <AppLoading />;
   } else {
     return (
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
+      <ScrollView style={styles.container}>
+        {/* <View style={styles.logoContainer}>
           <Image source={require('../assets/bantai-logo.png')} style={styles.logo} />
           <TouchableOpacity
             style={[styles.button, { backgroundColor: '#E21F13' }]}
@@ -202,9 +202,10 @@ export default function WelcomeScreen() {
             <Image source={require('../assets/camera.png')} style={{ height: 47, width: 47 }} />
           </TouchableOpacity>
 
-        </View>
-        <View style={{ backgroundColor: '#FFFFFF', width: '100%', position: 'absolute' }}>
+        </View> */}
+        <View style={{ backgroundColor: '#FFFFFF', width: '100%', height: '100%'}}>
           <SafeView style={styles.loginContainer}>
+            <Image source={require('../assets/logo.png')} style={{ height: 55, width: 48, margin: 10, alignSelf: 'center' }} />
             <Text style={styles.head}>Log in to your account</Text>
             <Form
               initialValues={{ email: '', password: '' }}
@@ -281,7 +282,7 @@ export default function WelcomeScreen() {
         </View>
 
 
-      </View>
+      </ScrollView>
     );
   }
 
@@ -302,11 +303,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     alignSelf: "center",
     color: "#1296D4",
-    padding: 20
+    marginVertical: 30
   },
   loginContainer: {
-    padding: 15,
-    backgroundColor: 'white'
+    padding: 20
   },
   footerButtonContainer: {
     marginVertical: 15,
@@ -324,8 +324,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'flex-end',
-    backgroundColor: '#1296D4'
+    backgroundColor: '#fff'
   },
   logoContainer: {
     position: 'absolute',
